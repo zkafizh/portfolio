@@ -1,0 +1,388 @@
+// ANCHOR
+function A( url, content, target ) {
+	target = ATTR( 'target', target || url );
+	url = ATTR( 'href', url );
+	return '<a' + url + target + '>' + content + '</a>';
+}
+function Aimg( url, img, title, target ) {
+	if( !title ) title = '';
+	img = IMG( img, '', title );
+	target = ATTR( 'target', target || url );
+	url = ATTR( 'href', url );
+	return '<a' + url + target + ' class="hidden-print">' + img + '</a>';
+}
+function Abtn( url, img, label, title, target ) {
+	title = ATTR( 'title', title );
+	img = ATTR( 'src', '/img/' + img + '.png' );
+	img = '<img' + img + title + '/>';
+	url = ATTR( 'href', url );
+	if( !target ) target = '_self';
+	target = ATTR( 'target', target || url );
+	return '<a class="btn btn-default btn-xs" ' + url + target + '>' + img + ' ' + label + '</a>';
+}
+
+// TABLE, THEAD, TBODY, TFOOT, TR
+function TABLE( str, id ) {
+	return '<table id="'+ id +'" class="table table-striped table-bordered table-hover table-condensed table-responsive">' + str + '</table>';
+}
+function TABLEresponsive( str, id ) {
+	return '<div class="table-container"><table id="'+ id +'" class="table table-striped table-bordered table-hover table-condensed table-responsive">' + str + '</table></div>';
+}
+function TABLEtree( id, str ) {
+	return '<table id="' + id + '-tree"  class="table-tree tree2 table-tree-bordered table-tree-striped table-tree-condensed">'+ str +'</table>';
+}
+function TABLEcompact( str ) {
+	return '<table class="table table-striped table-bordered table-hover table-condensed table-responsive" style="width:1%">' + str + '</table>';
+}
+function TABLEid( str, id ) {
+	return '<table id="' + id + '" class="table table-striped table-bordered table-hover table-condensed table-responsive">' + str + '</table>';
+}
+function THEAD( str ) {
+	return '<thead>' + str + '</thead>';
+}
+function TBODY( str ) {
+	return '<tbody>' + str + '</tbody>';
+}
+function TFOOT( str, id ) {
+	id = ATTR( 'id', id );
+	return '<tfoot' + id + '>' + str + '</tfoot>';
+}
+function TR( str, id, prop ) {
+	id = ATTR( 'id', id );
+	prop = H.MapToAttr( prop );
+	return '<tr' + id + prop + '>' + str + '</tr>';
+}
+function TRd( str, id, prop ) {
+	id = ATTR( 'id', id );
+	prop = H.MapToAttr( prop );
+	return '<tr class="del"' + id + prop + '>' + str + '</tr>';
+}
+
+function TRe( str, id, prop ) {
+	id = ATTR( 'id', id );
+	prop = H.MapToAttr( prop );
+	return '<tr class="error"' + id + prop + '>' + str + '</tr>';
+}
+function TRTDs() {
+	var html = '';
+	for( var z in arguments ) html += TD( arguments[ z ] )
+	return TR( html );
+}
+
+// TD
+// c = colspan, r = rowspan, d = don't break, n = numeric, i = with ID, w = width
+function TD( str, tooltip ) {
+	tooltip = ATTR( 'title', tooltip );
+	return '<td ' + tooltip + '>' + str + '</td>';
+}
+function TDcustom( tr_id, str, tooltip ) {
+	tooltip = ATTR( 'title', tooltip );
+	console.log($("tr[id*='SIG_M__8421__row1']"));
+	var height = $("tr[id*='"+tr_id+"']").height() + 10;
+	return '<td ' + tooltip + ' style="height: '+ height +'px">' + str + '</td>';
+}
+function TDBold( str, tooltip, prop ) {
+	tooltip = ATTR( 'title', tooltip );
+	return '<td ' + prop + ' style="font-weight: bold" ' + tooltip + '>' + str + '</td>';
+}
+function TDprop( str, prop ) {
+	return '<td ' + prop + '>' + str + '</td>';
+}
+function TDprops( str, props ) {
+	props = H.MapToAttr( props );
+	return '<td ' + props + '>' + str + '</td>';
+}
+function TDgender( str ) {
+	if( !str || str==' ' ) return '<td></td>';
+	var lo = 'male';
+	if( str=='F' || str=='P' ) lo = 'female';
+	return '<td><img src="/img/x.png" class="ico-' + lo + '" title="' + lo + '" /> ' + str + '</td>';
+}
+function TDprogsess( str ) {
+	if( !str || str==' ' ) return '<td></td>';
+	var lo = 'morning';
+	if( str=='N' ) lo = 'evening';
+	else if( str=='W' ) lo = 'weekend';
+	return '<td><img src="/img/x.png" class="ico-' + lo + '" title="' + lo + '" /> ' + str + ' </td>';
+}
+function TDcountry( str, tooltip ) {
+	if( !str || str==' ' ) return '<td></td>';
+	var lo = ('' + str).toLowerCase();
+	tooltip = tooltip || '';
+	return '<td><img src="/img/flag/' + lo + '.png" title="' + tooltip + '" /> ' + str + ' </td>';
+}
+function TDrwa( str, rowspan, width, align ) {
+	if( rowspan=='' ) { rowspan = '1'; }
+	if( width=='' ) { width = 'inherit'; }
+	if( align=='' ) { align = 'inherit'; }
+	return '<td rowspan="' + rowspan + '" style="width:' + width + ';text-align:' + align + ';">' + str + '</td>';
+}
+function TDc( str, colspan ) {
+	return '<td class="c" colspan="' + colspan + '">' + str + '</td>';
+}
+function TDd( str ) { // unbreakable
+	return '<td><span class="d">' + str + '</span></td>';
+}
+function TDtsem( str ) {
+	return '<td class="n">' + TSEM( str ) + '</td>';
+}
+function TDid( id, str ) {
+	id = ATTR( 'id', id );
+	return '<td ' + id + '>' + str + '</td>';
+}
+function TDwidth( width, str, tooltip, id ) {
+	tooltip = ATTR( 'title', tooltip );
+	id = ATTR( 'id', id );
+	return '<td ' + id + ' style="width:' + width + ';"' + tooltip + '>' + str + '</td>';
+}
+function TDidh( id, str ) {
+	id = ATTR( 'id', id );
+	return '<td' + id + ' style="display:none;" >' + str + '</td>';
+}
+function TDidnw( id, str, w, tooltip, cl, ft ) {
+	id = ATTR( 'id', id );
+	tooltip = ATTR( 'title', tooltip );
+	cl = ATTR( 'class', cl );
+	return '<td ' + id + cl + ' width="' + w + '" ' + tooltip + ' style="text-align:right; font-size: ' + ft + ';" >' + str + '</td>';
+}
+function TDn( str, tooltip ) {
+	tooltip = ATTR( 'title', tooltip );
+	return '<td class="n" ' + tooltip + '>' + N( str ) + '</td>';
+}
+function TDnbc(str, tooltip ) {
+	tooltip = ATTR( 'title', tooltip );
+	return '<td class="n blue c" ' + tooltip + '>' + N( str ) + '</td>';
+}
+function TDnprop( str, prop ) {
+	return '<td class="n" ' + prop + '>' + N( str ) + '</td>';
+}
+function TDnim( str, tooltip ) {
+	tooltip = ATTR( 'title', tooltip );
+	return '<td class="n" ' + tooltip + '>' + NIM( str ) + '</td>';
+}
+function TDmoney( str ) {
+	return '<td class="n">' + MONEY( str ) + '</td>';
+}
+function TDf( str, tooltip ) {
+	tooltip = ATTR( 'title', tooltip );
+	return '<td class="n" ' + tooltip + '>' + F2( str ) + '</td>';
+}
+function TDfprop( str, prop ) {
+	return '<td class="n" ' + prop + '>' + F2( str ) + '</td>';
+}
+function TDcenter( str, tooltip ) {
+	tooltip = ATTR( 'title', tooltip );
+	return '<td class="c" ' + tooltip + '>' + str + '</td>';
+}
+function TDrightnum( str, tooltip ) {
+	tooltip = ATTR( 'title', tooltip );
+	return '<td class="n" ' + tooltip + '>' + str + '</td>';
+}
+function TDp( str, tooltip ) { // unbreakable
+	tooltip = ATTR( 'title', tooltip );
+	return '<td class="n" ' + tooltip + '><span class="d">' + PF2( str ) + '</span></td>';
+}
+function TDtime( str, tooltip ) {
+	tooltip = ATTR( 'title', tooltip );
+	return '<td class="c" ' + tooltip + '>' + (str || ' ') + '</td>';
+}
+function TDweekdatetime( str, tooltip ) {
+	tooltip = ATTR( 'title', tooltip );
+	return '<td ' + tooltip + '>' + DTW( str ) + '</td>';
+}
+function TDdatetime( str, tooltip ) {
+	tooltip = ATTR( 'title', tooltip );
+	return '<td class="c" ' + tooltip + '>' + DT( str ) + '</td>';
+}
+function TDweekday( str, tooltip ) {
+	tooltip = ATTR( 'title', tooltip );
+	return '<td ' + tooltip + '>' + Dweekday( str ) + '</td>';
+}
+function TDfulldatetime( str, tooltip ) {
+	tooltip = ATTR( 'title', tooltip );
+	return '<td ' + tooltip + '>' + DTF( str ) + '</td>';
+}
+function TDgrade( str, tooltip ) {
+	tooltip = ATTR( 'title', tooltip );
+	return '<td class="grade grade-' + str + '" ' + tooltip + '>' + str + '</td>';
+}
+function TDdate( str, tooltip ) {
+	tooltip = ATTR( 'title', tooltip );
+	return '<td class="c" ' + tooltip + '>' + D( str ) + '</td>';
+}
+function TDmdate( str, tooltip ) {
+	tooltip = ATTR( 'title', tooltip );
+	return '<td ' + tooltip + '>' + MD( str ) + '</td>';
+}
+function TDdur( str, tooltip ) {
+	tooltip = ATTR( 'title', tooltip );
+	return '<td class="n"' + tooltip + '>' + Ddur( str ) + '</td>';
+}
+function TDratio( str, tooltip ) { // unbreakable
+	tooltip = ATTR( 'title', tooltip );
+	str = str.split( '/' );
+	if( !str.length ) throw('invalid ratio');
+	return '<td class="r"' + tooltip + '><span class="d">' + NSPAN( str[ 0 ] ) + ' of ' + NSPAN( str[ 1 ] ) + '</span></td>';
+}
+// Capacity cell with color-coding: green (<75%), yellow (75-99%), red (>=100% / full)
+function TDratioCapacity( enrolled, capacity, tooltip ) {
+	enrolled = +enrolled || 0;
+	capacity = +capacity || 0;
+	const remaining = Math.max( 0, capacity - enrolled );
+	let tip = enrolled + ' of ' + capacity + ' — ' + remaining + ' slots remaining';
+	if( tooltip ) tip = tooltip;
+	tooltip = ATTR( 'title', tip );
+	let color = '#5cb85c';        // green: plenty of slots
+	let bold = '';
+	if( capacity > 0 ) {
+		const ratio = enrolled / capacity;
+		if( ratio >= 1 )      { color = '#d9534f'; bold = ';font-weight:bold'; } // red: full / oversold
+		else if( ratio >= 0.75 ) { color = '#f0ad4e'; bold = ';font-weight:bold'; } // yellow: almost full
+	}
+	return '<td class="r"' + tooltip + '><span class="d" style="color:' + color + bold + '">' + NSPAN( enrolled ) + ' of ' + NSPAN( capacity ) + '</span></td>';
+}
+function TDcompare( str, tooltip ) { // unbreakable
+	tooltip = ATTR( 'title', tooltip );
+	str = str.split( '/' );
+	if( !str.length ) throw('invalid ratio');
+	return '<td' + tooltip + '><span class="d">' + NSPAN( str[ 0 ] ) + ' and ' + NSPAN( str[ 1 ] ) + '</span></td>';
+}
+function TDnr( str, rowspan, tooltip ) {
+	tooltip = ATTR( 'title', tooltip );
+	return '<td class="n" rowspan=' + Q( rowspan ) + tooltip + '>' + N( str ) + '</td>';
+}
+function TDfile_upload( str, tooltip, field, row ) {
+	tooltip = ATTR( 'title', tooltip );
+    var datas = '';
+    // field: {key="str|function(row)", file_type="str|function(row)", file_accept="str|function(row)", max_file_size="int|function(row)", extra_data="{}|function(row)"}
+	// row: {id, ..}
+    datas += ATTR( 'data-id', row.id );
+    if (typeof field.key=='function') {
+        datas += ATTR( 'data-key', field.key(row) );
+	} else {
+        datas += ATTR( 'data-key', field.key );
+	}
+    var attr_val;
+    if (field.file_type) {
+        attr_val = field.file_type;
+    	if (typeof attr_val=='function') attr_val = attr_val(row) ;
+		datas += ATTR( 'data-filetype', attr_val );
+    }
+    if (field.file_accept) {
+        attr_val = field.file_accept;
+        if (typeof attr_val=='function') attr_val = attr_val(row) ;
+        datas += ATTR( 'data-fileaccept', attr_val );
+    }
+    if (field.max_file_size) {
+        attr_val = field.max_file_size;
+        if (typeof attr_val=='function') attr_val = attr_val(row) ;
+        datas += ATTR( 'data-maxfilesize', attr_val );
+    }
+    if (field.extra_data){ // {key: val, key:val}
+        attr_val = field.extra_data;
+        if (typeof attr_val=='function') attr_val = attr_val(row) ;
+        Object.keys(attr_val).forEach( function(v){
+            datas += ATTR( 'data-x_'+v, attr_val[v] );
+    	});
+    }
+    return '<td ' + tooltip + '><div class="file_upload not_initialized"' + datas + '>Upload</div>' + str + '</td>';
+}
+function TDcheck( str, tooltip ) {
+	tooltip = ATTR( 'title', tooltip );
+	var stat = (str=='true' || str==true) ? 'checked="checked"' : '';
+	return '<td ' + tooltip + '><div style="text-align: center;"><input type="checkbox" disabled ' + stat + '></div></td>';
+}
+function TDidc( id, str, colspan, style ) {
+	style = ATTR( 'style', style );
+	colspan = ATTR( 'colspan', colspan );
+	id = ATTR( 'id', id );
+	return '<td' + id + colspan + style + '>' + str + '</td>';
+}
+function TDidn( id, num ) {
+	id = ATTR( 'id', id );
+	return '<td' + id + 'style="text-align:right;" class="number n">' + N( num ) + '</td>';
+}
+function TDidf( id, num ) {
+	id = ATTR( 'id', id );
+	return '<td' + id + 'style="text-align:right;" class="number n">' + F2( num ) + '</td>';
+}
+function TDtext( str ) {
+	return '<td><textarea rows="3" style="font-size: inherit; min-width: 360px; background-color: #f5f5f5;" readonly="readonly" class="form-control" >' + str + '</textarea></td>';
+}
+function TDtextarea( str , tooltip, field, row ) {
+    var _props = $.extend( {rows:3}, field.props);
+    return '<td><textarea ' + H.MapToAttr( _props ) + ' style="font-size: inherit; min-width: 360px; background-color: #f5f5f5;" readonly="readonly" class="form-control" >' + str + '</textarea></td>';
+}
+// TH
+function TH( str, tooltip ) {
+	tooltip = ATTR( 'title', tooltip );
+	return '<th' + tooltip + ' class="center">' + str + '</th>';
+}
+function THprop( str, prop ) {
+	return '<th ' + prop + ' class="center">' + str + '</th>';
+}
+function THr2( str, prop ) {
+	return '<th ' + prop + ' class="center" rowspan="2">' + str + '</th>';
+}
+function THpropn( str, prop ) {
+	return '<th ' + prop + ' class="n">' + N( str ) + '</th>';
+}
+function THattr( str, attr ) {
+	return '<th ' + (attr || '') + '>' + str + '</th>';
+}
+function THidn( id, num ) {
+	id = ATTR( 'id', id );
+	return '<th' + id + 'style="text-align:right;" >' + N( num ) + '</th>';
+}
+function THcls( str, cls ) {
+	cls = ATTR( 'class', cls );
+	return '<th' + cls + '>' + str + '</th>';
+}
+function THidcls( id, str, cls ) {
+	id = ATTR( 'id', id );
+	cls = ATTR( 'class', cls );
+	return '<th' + id + cls + '>' + str + '</th>';
+}
+function THr( str, rowspan, tooltip ) {
+	tooltip = ATTR( 'title', tooltip );
+	rowspan = ATTR( 'rowspan', rowspan );
+	return '<th' + rowspan + tooltip + ' class="center">' + str + '</th>';
+}
+function THc( str, colspan, tooltip ) {
+	tooltip = ATTR( 'title', tooltip );
+	colspan = ATTR( 'colspan', colspan );
+	return '<th' + colspan + tooltip + ' class="center">' + str + '</th>';
+}
+function THcl( str, colspan, tooltip ) {
+    tooltip = ATTR( 'title', tooltip );
+    colspan = ATTR( 'colspan', colspan );
+    return '<th' + colspan + tooltip + ' class="">' + str + '</th>';
+}
+function THccenter( str, colspan, tooltip ) {
+	tooltip = ATTR( 'title', tooltip );
+	colspan = ATTR( 'colspan', colspan );
+	return '<th class="c" ' + colspan + tooltip + '>' + str + '</th>';
+}
+function THd( str ) { // unbreakable
+	return '<th><span class="d">' + str + '</span></th>';
+}
+
+function THn( str, tooltip ) {
+	tooltip = ATTR( 'title', tooltip );
+	return '<th class="n" ' + tooltip + '>' + N( str ) + '</th>';
+}
+
+function THf( str, tooltip ) {
+	tooltip = ATTR( 'title', tooltip );
+	return '<th class="n" ' + tooltip + '>' + F2( str ) + '</th>';
+}
+function TDred( str, tooltip ) {
+	tooltip = ATTR( 'title', tooltip );
+	return '<td class="c" ' + tooltip + ' style="background-color: #f8d7da; color: #b02a37">' + str + '</td>';
+}
+//function THnr(str,rowspan) {
+//	return '<th class="n" rowspan="'+rowspan+'">' + N(str) + '</th>';
+//}
+//function TDnc(str,colspan) {
+//	return '<th class="n" colspan="'+colspan+'">' + N(str) + '</th>';
+//}

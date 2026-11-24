@@ -1,0 +1,516 @@
+// DIV
+//function CONTAINER(content) {
+//	return '<div class="container-fluid">' + content + '</div>';
+//}
+function ROW( id, content, cls ) {
+	if( !content ) content = '';
+	cls = ATTR( 'class', 'row ' + cls );
+	id = ATTR( 'id', id );
+	return '<div' + cls + id + '>' + content + '</div>';
+}
+function ROWx( content, cls ) {
+	cls = ATTR( 'class', 'row ' + cls );
+	return '<div' + cls + '>' + content + '</div>';
+}
+function COL( num, content, cls, prop ) {
+	cls = ATTR( 'class', 'col-xs-' + num + ' ' + cls );
+	prop = H.MapToAttr( prop );
+	return '<div' + cls + prop + '>' + content + '</div>';
+}
+function COLall( xs, sm, md, lg, content, cls, prop ) {
+	cls = ATTR( 'class', 'col-xs-' + xs + ' col-sm-' + sm + ' col-md-' + md + ' col-lg-' + lg + ' ' + cls );
+	prop = H.MapToAttr( prop );
+	return '<div' + cls + prop + '>' + content + '</div>';
+}
+function COL432( content, cls, prop ) {
+	cls = ATTR( 'class', 'col-xs-12 col-sm-4 col-md-3 col-lg-2 ' + cls );
+	prop = H.MapToAttr( prop );
+	return '<div' + cls + prop + '>' + content + '</div>';
+}
+function COL643( content, cls, prop ) {
+	cls = ATTR( 'class', 'col-xs-12 col-sm-6 col-md-4 col-lg-3 ' + cls );
+	prop = H.MapToAttr( prop );
+	return '<div' + cls + prop + '>' + content + '</div>';
+}
+
+// SPAN
+function SPANc( cls, content ) {
+	cls = ATTR( 'class', cls );
+	return '<span' + cls + '>' + content + '</span>';
+}
+function SPAN( id, value, title, prop ) {
+	id = ATTR( 'id', id );
+	title = ATTR( 'title', title );
+	prop = H.MapToAttr( prop );
+	if( !value ) value = '';
+	return '<span' + id + title + prop + '>' + value + '</span>';
+}
+
+function SPANgrade( id, value, title ) {
+	id = ATTR( 'id', id );
+	title = ATTR( 'title', title );
+	if( !value ) value = '';
+	return '<span' + id + title + ' class="grade grade-'+ value +'">' + value + '</span>';
+}
+
+function SPANr( value, id ) {
+	id = ATTR( 'id', id );
+	return '<span '+ id +' style="float:right;">' + value + '</span>';
+}
+function SPANl( value ) {
+	return '<span style="float:left;">' + value + '</span>';
+}
+function SPANhide( value ) {
+	return '<span style="display:none;" >' + value + '</span>';
+}
+function NSPAN( value ) { // number span
+	return '<span class="n">' + N( value ) + '</span>';
+}
+function AddSpaceBefore(value, loop){
+	var nbsp = '&nbsp;';
+	for(var i = 0; i < loop; i++){
+		nbsp += nbsp;
+	}
+	return nbsp + value;
+}
+function AddSpaceAfter(value, loop){
+	var nbsp = '&nbsp;';
+	for(var i = 0; i < loop; i++){
+		nbsp += nbsp;
+	}
+	return value + nbsp;
+}
+//function DIVgroup(label,col1,col2) {
+//	return '<div class="row">'
+//		+ '  <div class="col-xs-2">' + label + '  </div>'
+//		+ '  <div class="col-xs-5">' + col1 + '  </div>'
+//		+ '  <div class="col-xs-5">' + col2 + '  </div>'
+//		+ ' </div>';
+//}
+
+// BUTTON
+// set onclick to 'return false' to prevent form submitting
+function BUTTON( label, onclick, props, cls ) {
+	if( cls=='' ) {
+		cls = 'default';
+	}
+	props = H.MapToAttr( props );
+	onclick = ATTR( 'onclick', onclick );
+	return '<button ' + props + ' class="btn btn-' + cls + ' btn-xs hidden-print" ' + onclick + '>' + label + '</button>';
+}
+function BUTTONid( id, label, value, onclick, props ) {
+	props = H.MapToAttr( props );
+	onclick = ATTR( 'onclick', onclick );
+	id = ATTR( 'id', id );
+	value = ATTR( 'value', value );
+	return '<button ' + id + value + props + ' class="btn btn-default hidden-print" ' + onclick + '>' + label + '</button>';
+}
+function BUTTONimg( img, label, onclick, props ) {
+	props = H.MapToAttr( props );
+	onclick = ATTR( 'onclick', onclick );
+	var img_el = '<img src="/img/x.png" class="ico-' + img + '" title="' + label + '" />';
+	return '<button ' + props + ' class="btn btn-xs btn-default hidden-print" ' + onclick + '>' + img_el + ' ' + label + '</button>';
+}
+function BUTTONimgL( img, label, onclick, props ) {
+    props = H.MapToAttr( props );
+    onclick = ATTR( 'onclick', onclick );
+    var img_el = '<img src="/img/x.png" class="ico-' + img + '" title="' + label + '" />';
+    return '<button ' + props + ' class="btn btn-lg btn-default hidden-print" ' + onclick + '>' + img_el + ' ' + label + '</button>';
+}
+function IMG( image, onclick, tooltip ) {
+	tooltip = (tooltip ? tooltip : image);
+	tooltip = ATTR( 'title', tooltip );
+	onclick = ATTR( 'onclick', onclick );
+	return '<img class="btn btn-default btn-xs hidden-print ico-'+image+'" src="/img/x.png" height="18" width="18" ' + tooltip + onclick + '/>';
+}
+function IMGtransparent( image, onclick, tooltip ) {
+	tooltip = (tooltip ? tooltip : image);
+	tooltip = ATTR( 'title', tooltip );
+	onclick = ATTR( 'onclick', onclick );
+	return '<img class="btn btn-xs hidden-print ico-'+image+'" src="/img/x.png" height="16" width="18" style="border: 1px solid transparent" ' + tooltip + onclick + '/>';
+}
+function IMGedit( form, id, tooltip ) {
+	return IMG( 'edit', form + '.OnEdit(' + id + ')', tooltip || ('edit row id: ' + id) );
+}
+function IMGc( image, onclick, cls ) {
+	if( !cls ) cls = 'default';
+	image = ATTR( 'src', '/img/' + image + '.png' );
+	onclick = ATTR( 'onclick', onclick );
+	cls = ATTR( 'class', 'btn btn-' + cls + ' btn-xs' );
+	return '<img' + cls + image + onclick + ' />';
+}
+function IMAGE( image, tooltip ) {
+	image = ATTR( 'src', '/img/' + image + '.png' );
+	tooltip = ATTR( 'title', tooltip );
+	return '<img' + image + tooltip + ' />';
+}
+function IMAGEb( image, tooltip ) {
+	image = ATTR( 'src', '/img/' + image + '.png' );
+	tooltip = ATTR( 'title', tooltip );
+	return '<img class="btn btn-xs btn-default" ' + image + tooltip + ' />';
+}
+function IMAGEsq( image, size, tooltip ) {
+	image = ATTR( 'src', '/img/' + image + '.png' );
+	tooltip = ATTR( 'title', tooltip );
+	var width = ATTR( 'width', size );
+	var height = ATTR( 'height', size );
+	return '<img' + image + tooltip + width + height + ' />';
+}
+
+// STRONG, ITALIC
+function STRONG( str ) {
+	return '<strong>' + str + '</strong>';
+}
+function ITALIC( str ) {
+	return '<i>' + str + '</i>';
+}
+function UNBREAKABLE( str ) {
+	return '<span class="d">' + str + '</span>';
+}
+
+// FORM
+function FORM( id, content ) {
+	return '<form class="form-horizontal" ' + ATTR( 'id', id ) + '>' + content + '</form>';
+}
+function FORMgroup39( label, col1, col2 ) {
+	return '<div class="form-group">'
+		+ '  <div class="col-xs-3">' + label + '  </div>'
+		+ '  <div class="col-xs-9">' + SPANhide( col1 ) + col2 + '  </div>'
+		+ ' </div>';
+}
+function FORMgroup48( label, col1, col2 ) {
+    return '<div class="form-group">'
+        + '  <div class="col-xs-4">' + label + '  </div>'
+        + '  <div class="col-xs-8">' + SPANhide( col1 ) + col2 + '  </div>'
+        + ' </div>';
+}
+function FORMgroupFull( label, col1, col2 ) {
+	return '<div class="form-group">'
+		+ '  <div class="col-xs-12"><h4>' + label + col1 + col2 + '  </h4></div>'
+		+ ' </div>';
+}
+function FORMgroup255( label, col1, col2 ) {
+	return '<div class="form-group">'
+		+ '  <div class="col-xs-2">' + label + '  </div>'
+		+ '  <div class="col-xs-5">' + col1 + '  </div>'
+		+ '  <div class="col-xs-5">' + col2 + '  </div>'
+		+ ' </div>';
+}
+function FORMgroup192( label, col1, col2 ) {
+	return '<div class="form-group">'
+		+ '  <div class="col-xs-1">' + label + '  </div>'
+		+ '  <div class="col-xs-9">' + col1 + '  </div>'
+		+ '  <div class="col-xs-2">' + col2 + '  </div>'
+		+ ' </div>';
+}
+function FORMgroup282( label, col1, col2 ) {
+	return '<div class="form-group">'
+		+ '  <div class="col-xs-2">' + label + '  </div>'
+		+ '  <div class="col-xs-8">' + col1 + '  </div>'
+		+ '  <div class="col-xs-2">' + col2 + '  </div>'
+		+ ' </div>';
+}
+function FORMlabel( id, label ) {
+	return '<label for="' + id + '" class="control-label">' + label + '</label>';
+}
+function LABELWarning( id, label ) {
+	return '<label style="color:red;font-style:italic;" id="' + id + '" class="control-label">' + label + '</label>';
+}
+
+// INPUT, TEXTAREA, SEARCH
+// d = disabled
+function INPUT( type, id, value, props ) { // without need to add (event,this)
+	props = H.MapToAttr( props );
+	if( type ) type = ATTR( 'type', type );
+	if( value!=null ) value = ATTR( 'value', value );
+	return '<input ' + props + type + ' class="form-control" ' + ATTR( 'id', id ) + value + ' >';
+}
+function INPUTdummy() { // to prevent RETURN key triggering form submit when only one input
+	return '<input type="text" style="display:none" class="form-control" name="dummy" >';
+}
+function NUMBER( id, value, props, tooltip ) {
+	props = H.MapToAttr( props ); // type="text", because jquery-thousand doesn't support selectionStart
+	if( value ) value = ATTR( 'value', value );
+	var placeholder = ( tooltip==null ) ? '0' : tooltip;
+	return '<input ' + props + ' type="text" data-type2="number" class="form-control number" placeholder=' + placeholder + ' ' + ATTR( 'id', id ) + value + ' >';
+}
+
+function NUMBER2( id, value, props, tooltip ) {
+	props = H.MapToAttr( props ); // type="text", because jquery-thousand doesn't support selectionStart
+	if( value ) value = ATTR( 'value', value );
+	var placeholder = ( tooltip==null ) ? '0' : tooltip;
+	return '<input ' + props + ' type="text" data-type2="number" class="form-control number2" placeholder=' + placeholder + ' ' + ATTR( 'id', id ) + value + ' >';
+}
+
+function FLOAT( id, value, props ) {
+	props = H.MapToAttr( props ); // type="text", because jquery-thousand doesn't support selectionStart
+	if( value ) value = ATTR( 'value', value );
+	return '<input ' + props + ' type="text" data-type2="float" class="form-control float" ' + ATTR( 'id', id ) + value + ' >';
+}
+function RADIO( id, value, props ) {
+	props = H.MapToAttr( props );
+	if( value ) value = ATTR( 'value', value );
+	return '<input ' + props + ' type="radio" data-type2="radio" class="form-control checkbox" ' + ATTR( 'id', id ) + value + ' >';
+}
+function RADIOname( name, value, sel ) {
+	name = ATTR( 'name', name );
+	value = ATTR( 'value', value );
+	sel = sel ? 'checked="checked"' : '';
+	return '<input ' + name + sel + ' type="radio" data-type2="radio" class="form-control checkbox" ' + value + ' >';
+}
+function CHECKBOX( id, value, props ) { // call with: .bootstrapToggle(TOGGLE_HIDESHOW_OPT)
+	props = H.MapToAttr( props );
+	if( value ) value = ATTR( 'value', value );
+	return '<input ' + props + ' type="checkbox" data-type2="checkbox" class="form-control checkbox" ' + ATTR( 'id', id ) + value + ' >';
+}
+function CHECKBOXid( id, value, props ) {
+	props = H.MapToAttr( props );
+	var stat = (value=='true' || value==true) ? 'checked="checked"' : '';
+	if( value ) value = ATTR( 'value', value );
+	return '<input '+ props + ATTR('id',id)+' class="form-control checkbox" type="checkbox" ' + stat + value +' >';
+}
+function AUTOCOMPLETE( id, value, props ) {
+	props = H.MapToAttr( props );
+	var func = unsetValueAutocomplete(id);
+	if( value ) value = ATTR( 'value', value );
+	return  '<div class="input-group">' +
+		'<input ' + props + ' type="text" disabled="disabled" class="form-control" ' + ATTR( 'id', id ) + value + ' >' +
+		'<span class="input-group-btn" style="width:0px;"></span>' +
+		'<input ' + props + ' type="text" data-type2="autocomplete" class="form-control autocomplete" ' + ATTR( 'id', id + '__autocomplete' ) + props + ' >' +
+		'<span class="input-group-btn" style="width:0px;">'+ IMG("delete",func,"unset") +'</span>' +
+		'<span class="input-group-btn" style="width:0px;" '+ ATTR( 'id', id +'_val')+'></span>' +
+		'<div ' + ATTR( 'id', id + '__suggestion' ) + '></div>' +
+		'</div>';
+}
+function SUGGESTION( rows, onclick ) {
+	var html = '<ul class="suggestion-list">';
+	var no = 0;
+	sort = Object.keys( rows );
+	sort.sort( function( a, b ) {
+		a = rows[ a ];
+		b = rows[ b ];
+		if( a<b ) return -1;
+		if( a>b ) return +1;
+		return a;
+	} );
+	for( var z in sort ) {
+		var id = sort[ z ];
+		var label = rows[ id ];
+		html += '<li class="r' + (++no % 2) + '" onclick="' + onclick + '(this,' + id + ')">' + label + '</li>'
+	}
+	return html + '</ul>'
+}
+function CHECKBOXm( name, value, props ) {
+	props = H.MapToAttr( props );
+	if( value ) value = ATTR( 'value', value );
+	return '<input ' + props + ' type="checkbox" class="form-control checkbox" ' + ATTR( 'name', name + '[]' ) + value + ' >';
+}
+function HIDDEN( name, value, props ) {
+	props = H.MapToAttr( props );
+	if( value ) value = ATTR( 'value', value );
+	return '<input ' + props + ' type="hidden" ' + ATTR( 'name', name + '[]' ) + value + ' >';
+}
+function LABEL( name, value, props ) {
+	props = H.MapToAttr( props );
+	return '<input ' + props + ' type="hidden" ' + ATTR( 'name', name + '[]' ) + value + ' >' + value;
+}
+function TEXTAREA( id, value, props ) {
+	props = H.MapToAttr( props );
+	return '<textarea ' + props + ' class="form-control" ' + ATTR( 'id', id ) + ' >' + value + '</textarea>';
+}
+function JSON_EDITOR( id, value, props ) {
+	props = H.MapToAttr( props );
+	value = JSON.stringify( value );// , null, 2 // TODO: remove <br /> that added into textarea when using JSON with newline
+	return '<textarea ' + props + ' data-type2="json" class="form-control code json" ' + ATTR( 'id', id ) + ' >' + value + '</textarea>';
+}
+
+// DATE, TIME, DATETIME, MULTIDATE
+// d = disabled
+function DATE( id, value, props ) {
+	props = H.MapToAttr( props );
+	if( value ) value = ATTR( 'value', value );
+	var t = '"format: YYYY-MM-DD"';
+	return '<div class="input-group date">'
+		+ '<input ' + props + ' type="text" tooltip=' + t + ' placeholder=' + t + ' data-type2="date" class="form-control date" ' + ATTR( 'id', id ) + value + ' >'
+		+ '<span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span></div>';
+}
+function TIME( id, value, props ) {
+	props = H.MapToAttr( props );
+	if( value ) value = ATTR( 'value', value );
+	var t = '"hh:mm"';
+	return '<input ' + props + ' type="text" tooltip=' + t + ' placeholder=' + t + ' data-type2="time" class="form-control time" ' + ATTR( 'id', id ) + value + ' >';
+}
+function DATETIME( id, value, props ) {
+	props = H.MapToAttr( props );
+	if( value ) value = ATTR( 'value', value );
+	var t = '"format: YYYY-MM-DD hh:mm"';
+	return '<input ' + props + ' type="text" tooltip=' + t + ' placeholder=' + t + ' data-type2="datetime" class="form-control datetime" ' + ATTR( 'id', id ) + value + ' >';
+}
+function MULTIDATE( id, value, props ) {
+	props = H.MapToAttr( props );
+	if( value ) value = ATTR( 'value', value );
+	var t = '"format: YYYY-MM-DD, YYYY-MM-DD, ..."';
+	return '<div class="input-group date">'
+		+ '<input ' + props + ' type="text" tooltip=' + t + ' placeholder=' + t + ' data-type2="multidate" class="form-control multidate" ' + ATTR( 'id', id ) + value + ' >'
+		+ '<span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span></div>';
+}
+
+// SELECT, COMBOBOX, OPTION
+// d = disabled, m = multiple
+function SELECT( id, props, options ) {
+	id = ATTR( 'id', id );
+	props = H.MapToAttr( props );
+	if( !options ) options = '';
+	return '<select ' + props + ' data-type2="select" class="form-control select combobox" ' + id + '>' + options + '</select>';
+}
+function SELECTm( id, props, options ) {
+	id = ATTR( 'id', id );
+	props = H.MapToAttr( props );
+	if( !options ) options = '';
+	return '<select ' + props + ' data-type2="multiselect" multiple="multiple" class="form-control multiselect combobox" ' + id + '>' + options + '</select>';
+}
+function OPTGROUP( value, label, content ) {
+	label = OPTIONlabel( label );
+	label = ATTR( 'label', label );
+	return '<optgroup' + label + '>' + OPTION( value, '[' + label + ']' ) + content + '</optgroup>';
+}
+// adding selected value, modified by Sofyan
+function OPTION( value, label, selected ) {
+	label = OPTIONlabel( label );
+	value = ATTR( 'value', value );
+	selected = selected ? 'selected' : '';
+	return '<option' + value + selected + '>' + label + '</option>';
+}
+function OPTIONlabel( label ) {
+	if( label && label.join ) label = H.First2Field( label, ' -- ' );
+	return label;
+}
+// generate <option>s (for replacing select)
+function OPTIONs( datasource, initial_val ) {
+	var inner = [];
+	if( 'object'!= typeof datasource ) throw('OPTIONs error: datasource must be an object instead of ' + datasource);
+	//for( var z in datasource ) break;
+	var z;
+	if( 'object'!= typeof datasource[ z ] ) for( z in datasource ) inner.push( [ datasource[ z ], z ] ); // {key:value,..
+	else for( z in datasource ) inner.push( [ H.First2Field( datasource[ z ], ' -- ' ), z ] ); // {key:[values],..
+	inner.sort();
+	var html = '';
+	for( z = 0; z<inner.length; ++z ) {
+		var iz = inner[ z ];
+		html += OPTION( iz[ 1 ], iz[ 0 ], iz[ 1 ]==initial_val );
+	}
+	return html;
+}
+// generate array of labels (for diff)
+function OPTIONlabels( datasource, ids ) {
+	var labels = [];
+	for( var z in ids ) {
+		var idx = ids[ z ];
+		labels.push( OPTIONlabel( datasource[ idx ] ) );
+	}
+	return labels;
+}
+
+// DTDD, DL
+function DL( content ) {
+	return '<dl class="dl-horizontal">' + content + '</dl>';
+}
+function DTDD( term, definition ) {
+	return '<dt>' + term + '</dt><dd class="diff">' + definition + '</dd>';
+}
+function DTDDid( term, definition, id ) {
+	return '<dt>' + term + '</dt><dd class="diff" id="' + id + '">' + definition + '</dd>';
+}
+function DTidDDid( term, id_dt, definition, id_dd ) {
+	return '<dt id="' + id_dt + '">' + term + '</dt><dd class="diff" id="' + id_dd + '">' + definition + '</dd>';
+}
+//	var col = '<div id="father" class="col col-md-6">' + edit_button + ' Father Identity<br/><br/>' + DL( dl ) + '</div>' +
+//'<div id="mother" class="col col-md-6">' + edit_button2 + ' Mother Identity<br/><br/>' + DL( dl2 ) + '</div>';
+function DV( id, col, content, content_after ) {
+	return '<div id="' + id + '" class="col col-md-' + col + '">' + content + '<br/><br/>' + content_after + '</div>';
+}
+// BR
+function BR() {
+	return '<br/>';
+}
+function BRc() {
+	return ',<br/>';
+}
+
+// HR
+function HR() {
+	return '<hr/>';
+}
+
+// PRE
+function PREjson( content, full ) {
+	return '<pre class="json' + (full ? ' full' : '') + '">' + content + '</pre>';
+}
+
+// H1, H2, H3, H4, H5, H6
+function H1( str ) {
+	return '<h1>' + str + '</h1>';
+}
+function H2( str ) {
+	return '<h2>' + str + '</h2>';
+}
+function H3( str ) {
+	return '<h3>' + str + '</h3>';
+}
+function H4( str ) {
+	return '<h4>' + str + '</h4>';
+}
+function H5( str ) {
+	return '<h5>' + str + '</h5>';
+}
+function H6( str ) {
+	return '<h6>' + str + '</h6>';
+}
+
+// Label Box
+function GLabelBox( str, tooltip ) {
+	return '<div style="text-align: center; border-radius: 5px; background: #8CBF17; width: 130px;" title="' + tooltip + '">' + str + '</div>';
+}
+function RLabelBox( str, tooltip ) {
+	return '<div style="text-align: center; border-radius: 5px; background: #ED5C4C; width: 140px;" title="' + tooltip + '">' + str + '</div>';
+}
+
+// list
+function LI( text ) {
+	return '<li>' + text + '</li>';
+}
+
+function LIprops( id, text, props) {
+	return '<li id="'+ id +'" '+ props+ '>' + text + '</li>';
+}
+
+function LIaimg( img, title, url ) {
+	url = ATTR( 'href', url );
+	return '<li role="presentation"><a role="menuitem" tabindex="-1"' + url + ' target="_blank">' + IMG( img, '', title ) + ' &nbsp; ' + title + '</a></li>';
+}
+function LIimg( img, onclick, title ) {
+	return '<li role="presentation"><a role="menuitem" tabindex="-1" onclick="' + onclick + '" target="_blank">' + IMG( img, onclick, title ) + ' &nbsp; ' + title + '</a></li>';
+}
+function UL( inner ) {
+	return '<ul>' + inner + '</ul>';
+}
+function OL( inner ) {
+	return '<ol>' + inner + '</ol>';
+}
+function ULdropdown( colour, inner, label, title ) {
+	var class_ = '';
+	if( colour=='' ) colour = 'primary';
+	if( label==undefined ) {
+		label = '';
+		class_ = 'h20';
+	} else {
+        label += '&nbsp;';
+	}
+	
+	return '<span class="dropdown" title="'+(title||'')+'">' +
+		'<button class="btn btn-' + colour + ' btn-xs dropdown-toggle ' + class_ + ' " id="menu1" type="button" data-toggle="dropdown">' + label +
+			'<span class="caret"></span>' +
+		'</button>' +
+		'<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">' + inner + '</ul>' +
+		'</span>';
+}

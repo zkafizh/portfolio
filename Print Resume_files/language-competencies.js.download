@@ -1,0 +1,129 @@
+DS.LanguageNativity = {
+    INA_NAT: 'Indonesia (Native)',
+    INA_FLU: 'Indonesia (Fluent)',
+    INA_INT: 'Indonesia (Intermediate)',
+    INA_BGN: 'Indonesia (Beginner)',
+    ENG_NAT: 'English (Native)',
+    ENG_FLU: 'English (Fluent)',
+    ENG_INT: 'English (Intermediate)',
+    ENG_BGN: 'English (Beginner)',
+    JAP_NAT: 'Japanese (Native)',
+    JAP_FLU: 'Japanese (Fluent)',
+    JAP_INT: 'Japanese (Intermediate)',
+    JAP_BGN: 'Japanese (Beginner)',
+    ITA_NAT: 'Italian (Native)',
+    ITA_FLU: 'Italian (Fluent)',
+    ITA_INT: 'Italian (Intermediate)',
+    ITA_BGN: 'Italian (Beginner)',
+    RUS_NAT: 'Rusia (Native)',
+    RUS_FLU: 'Rusia (Fluent)',
+    RUS_INT: 'Rusia (Intermediate)',
+    RUS_BGN: 'Rusia (Beginner)',
+    KOR_NAT: 'Korea (Native)',
+    KOR_FLU: 'Korea (Fluent)',
+    KOR_INT: 'Korea (Intermediate)',
+    KOR_BGN: 'Korea (Beginner)',
+    MDR_NAT: 'Mandarin (Native)',
+    MDR_FLU: 'Mandarin (Fluent)',
+    MDR_INT: 'Mandarin (Intermediate)',
+    MDR_BGN: 'Mandarin (Beginner)',
+    OTHER: '-- Other --'
+}
+
+const Get_LanguageCompetencies = async () => {
+    const DoAjax = new Promise((resolve, reject) => {
+            const values = {
+                a: 'language_competencies_GET'
+            }
+            H.Post(values, (res) => {
+                if (H.HasAjaxErrors(res)) {
+                    reject(res.error);
+                    return
+                }
+                resolve(res.result);
+            });
+        }
+    )
+    return DoAjax;
+}
+
+const Load_LanguageCompetenciesVIEW = (result) => {
+    const grid_1 = FORM_6 + '_grid';
+    const form = grid_1 + '_FORM';
+    $('#' + FORM_6).html(`
+            <div class="card">
+                <div class="card-header"> Language Competencies</div>
+                <div class="card-body">
+                     <div class="row">
+                        <div class="col-md-12">
+                            <div id="${grid_1}"></div>
+                        </div>
+                     </div>
+                </div>
+            </div>
+        `);
+    new GridBuilder(grid_1, {
+        table_header: 'Language Certificates',
+        fields: [
+            {
+                header: 'Action', renderer: (row) => {
+                    return GridBuilderRowButton.BtnITextBlock('edit', 'Edit', `${form}.OnEdit(${row.id})`, 'primary')
+                }
+            },
+            {
+                header: 'Language', renderer: (row) => {
+                    return DS.LanguageNativity[row.language_id];
+                }
+            },
+            {header: 'Certificate Name', renderer: 'name'},
+            {header: 'Received At', renderer: 'received_at'},
+            {header: 'Expiry Date', renderer: 'valid_until'},
+            {header: 'Certificate Issuer', renderer: 'certifier'},
+            {header: 'Score', renderer: 'score'},
+        ],
+        rows: result,
+        can_search: false,
+        ajax_reload_action: 'language_competencies_GET',
+        ajax_update_action: 'language_competencies_GET',
+        ajax_list_action: 'language_competencies_GET',
+    });
+    new FormBuilder(grid_1, form, {
+        title: "Add/Edit Language Certificates",
+        grids: [grid_1],
+        save_action: "language_competencies_POST",
+        can_delete: true,
+        can_restore: true,
+        fields: [
+            {
+                label: "Country Language",
+                name: "language_id",
+                datasource: DS.LanguageNativity,
+                type: "select",
+                required: true,
+            },
+            {
+                label: "Language Certification Name/Title",
+                name: "name",
+                type: "text",
+            },
+            {label: "Received At", name: "received_at", type: "date"},
+            {
+                label: "Valid until",
+                name: "valid_until",
+                note_after: `<small>leave this empty if the competencies doesn't expires</small>`,
+                type: "date",
+            },
+            {
+                label: "Certificate Issuer",
+                name: "certifier",
+                type: "text",
+            },
+            {
+                label: "Score",
+                name: "score",
+                note_after: `<small>Add a score if the certificate have a score</small>`,
+                type: "text",
+            },
+        ],
+    })
+};
